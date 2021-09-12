@@ -1,36 +1,25 @@
 package com.simple.binarySearch;
 
-import java.util.Arrays;
-
 public class BinarySearch {
     public int search(int[] nums, int target) {
-        System.out.println("\ntarget " + target);
-        System.out.println("nums " + Arrays.toString(nums));
+        int left = 0;
+        int right = nums.length - 1;
+        int pivot = 0;
 
+        while (left <= right) {
+            pivot = left + (right - left) / 2;
+            int pivotNumber = nums[pivot];
 
-        int midIndex = nums.length / 2;
-        System.out.println("midIndex " + midIndex);
-        int midNumber = nums[midIndex];
-        System.out.println("midNumber " + midNumber);
+            if (pivotNumber == target) {
+                return pivot;
+            }
 
-
-        if (midNumber == target) {
-            return midIndex;
+            if (pivotNumber > target) {
+                right = pivot - 1;
+            } else {
+                left = pivot + 1;
+            }
         }
-        if (nums.length == 1) return -1;
-
-        if (midNumber > target) {
-            // the target number is in the first half
-            int[] startToMidArray = Arrays.copyOfRange(nums, 0, midIndex);
-            System.out.println("first half " + midIndex);
-
-            return search(startToMidArray, target);
-        } else {
-            // the target number is in the second half
-            int[] midToEndArray = Arrays.copyOfRange(nums, midIndex, nums.length);
-            System.out.println("second half " + midIndex);
-            int indexFound = search(midToEndArray, target);
-            return indexFound == -1 ? indexFound : midIndex + indexFound;
-        }
+        return -1;
     }
 }
