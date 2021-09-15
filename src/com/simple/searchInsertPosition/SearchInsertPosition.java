@@ -2,25 +2,13 @@ package com.simple.searchInsertPosition;
 
 public class SearchInsertPosition {
     public int searchInsert(int[] nums, int target) {
-        int left = 0;
-        int right = nums.length - 1;
-
-        if (target > nums[right]) return nums.length;
-
-        while (left < right) {
-            int pivot = left + (right - left) / 2;
-            int number = nums[pivot];
-
-            System.out.println(pivot);
-            System.out.println(number);
-
-            if (target > number) {
-                left = pivot + 1;
-            } else {
-                right = pivot;
-            }
+        int pivot, left = 0, right = nums.length - 1;
+        while (left <= right) {
+            pivot = left + (right - left) / 2;
+            if (nums[pivot] == target) return pivot;
+            if (target < nums[pivot]) right = pivot - 1;
+            else left = pivot + 1;
         }
-
         return left;
     }
 }
