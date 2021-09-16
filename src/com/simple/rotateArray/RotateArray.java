@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 public class RotateArray {
     public void rotate(int[] nums, int k) {
-
         int n = nums.length;
         int overwrittenNumberIndex;
 
@@ -19,7 +18,5 @@ public class RotateArray {
         System.out.println("==========================");
         System.out.println(Arrays.toString(nums));
         System.out.println("==========================");
-
-
     }
 }

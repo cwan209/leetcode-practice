@@ -21,6 +21,21 @@ class RotateArrayTest {
         Assertions.assertArrayEquals(expected, num);
     }
 
+    @Test
+    public void shouldReturnCorrectIndexWhenFound2() {
+        // given
+        int [] num = new int[] {-1,-100,3,99};
+        int k = 2;
+        RotateArray r = new RotateArray();
+
+        // when
+        r.rotate(num, k);
+
+        // then
+        int [] expected = new int[] {3,99,-1,-100};
+        Assertions.assertArrayEquals(expected, num);
+    }
+
 
 
 }
