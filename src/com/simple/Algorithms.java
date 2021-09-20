@@ -1,9 +1,6 @@
 package com.simple;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Algorithms {
     public int[] twoSum(int[] nums, int target) {
@@ -57,33 +54,46 @@ public class Algorithms {
 
     public int lengthOfLongestSubstring(String s) {
         int left = 0;
-        int right = 1;
-        int maxLength = 0;
+        int right = 0;
+        int[] chars = new int[128];
 
-        while (right <= s.length()) {
-            int length = right - left;
-            String subString = s.substring(left, right);
-            if (isNonRepeating(subString)) {
-                if (length > maxLength) maxLength = length;
-                right++;
-            } else {
+        int res = 0;
+        while(right < s.length()) {
+            char r = s.charAt(right);
+            chars[r]++;
+
+            while (chars[r] > 1) {
+                // there's duplicate
+                char l = s.charAt(left);
+                chars[l]--;
                 left++;
             }
-        }
 
-        return maxLength;
+            res = Math.max(res, right - left + 1);
+
+            right++;
+        }
+        return res;
     }
 
-    private boolean isNonRepeating(String s) {
-        char[] chars = s.toCharArray();
-        List<Character> existingChars = new ArrayList<>();
-        for (char aChar : chars) {
-            if (existingChars.contains(aChar)) {
-                return false;
-            } else {
-                existingChars.add(aChar);
-            }
+    public boolean checkInclusion(String s1, String s2) {
+        char[] s1Chars = s1.toCharArray();
+        int[] s1Map = new int[128];
+        for (char c: s1Chars) {
+            s1Map[c]++;
         }
-        return true;
+        int windowLength = s1.length();
+        char[] s2Chars = s2.toCharArray();
+
+        int left = 0;
+        while ((left + windowLength) <= s2.length()) {
+            int[] s2Map = new int[128];
+            for (int i = left; i < left + windowLength; i++) {
+                s2Map[s2Chars[i]]++;
+            }
+            if (Arrays.equals(s1Map, s2Map)) return true;
+            left++;
+        }
+        return false;
     }
 }
