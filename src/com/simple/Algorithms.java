@@ -56,15 +56,22 @@ public class Algorithms {
     }
 
     public int lengthOfLongestSubstring(String s) {
-        int n = s.length();
-        for (int i = n; i > 0; i--) {
-            for (int j = 0; j < n - i + 1; j++) {
-                String subString = s.substring(j, j + i);
-                System.out.println(subString);
-                if (isNonRepeating(subString)) return subString.length();
+        int left = 0;
+        int right = 1;
+        int maxLength = 0;
+
+        while (right <= s.length()) {
+            int length = right - left;
+            String subString = s.substring(left, right);
+            if (isNonRepeating(subString)) {
+                if (length > maxLength) maxLength = length;
+                right++;
+            } else {
+                left++;
             }
         }
-        return n;
+
+        return maxLength;
     }
 
     private boolean isNonRepeating(String s) {
