@@ -1,6 +1,7 @@
 package com.simple;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Algorithms {
     public int[] twoSum(int[] nums, int target) {
@@ -123,6 +124,41 @@ public class Algorithms {
             if (sr + 1 < image[0].length) dfs(image, sr + 1, sc,color, newColor);
             if (sc + 1 < image.length) dfs(image, sr, sc + 1,color, newColor);
         }
+    }
+
+    public int maxAreaOfIsland(int[][] grid) {
+        boolean[][] foundIslands = new boolean[grid.length][grid[0].length];
+        int maxSizeIsland = 0;
+        for (int i = 0; i < grid.length; i++) {
+            int[] row = grid[i];
+
+            for (int j = 0; j < row.length; j++) {
+                int pixel = row[j];
+
+                if (pixel != 0 ) {
+                    // it's an island
+                    int islandSize = findAdjacentIslands(i, j, grid, foundIslands);
+                    maxSizeIsland = Math.max(islandSize, maxSizeIsland);
+                }
+
+            }
+        }
+        return maxSizeIsland;
+    }
+
+    private int findAdjacentIslands(int i, int j, int[][] grid, boolean[][] foundIslands) {
+        int area = 0;
+        if (grid[i][j] == 1) {
+            foundIslands[i][j] = true;
+            area++;
+
+            if (i > 1 && !foundIslands[i - 1][j] ) area += findAdjacentIslands(i - 1, j, grid, foundIslands);
+            if (j > 1 && !foundIslands[i][j - 1] ) area += findAdjacentIslands(i, j - 1, grid, foundIslands);
+            if (i + 1 < grid.length && !foundIslands[i + 1][j]) area += findAdjacentIslands(i + 1, j, grid, foundIslands);
+            if (j + 1 < grid[0].length && !foundIslands[i][j + 1]) area += findAdjacentIslands(i, j + 1, grid, foundIslands);
+
+        }
+        return area;
     }
 
 
