@@ -249,4 +249,13 @@ public class AlgorithmsTests {
      ***/
     @Test void mergeTrees() {
     }
+
+    @Test void mergeArrays() {
+        int [] arr1 = new int[] {1,3 ,4, 5};
+        int [] arr2 = new int[] {2,6,7,8};
+        int [] expected = new int[] {1,2,3,4,5,6,7,8};
+
+        Assertions.assertEquals(expected, algorithms.mergeArrays(arr1, arr2));
+
+    }
 }

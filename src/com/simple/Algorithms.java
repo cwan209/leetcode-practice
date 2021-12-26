@@ -186,4 +186,87 @@ public class Algorithms {
     }
 
 
+    public Node connect(Node root) {
+        if (root == null) return null;
+        List<Node> currentLevel = new ArrayList<>();
+        currentLevel.add(root);
+        while (currentLevel.get(0).left != null) {
+
+            List<Node> nextLevel = new ArrayList<>();
+
+            for (Node node: currentLevel) {
+                nextLevel.add(node.left);
+                nextLevel.add(node.right);
+            }
+
+            for (int i = 0; i < nextLevel.size(); i++) {
+                if (i == nextLevel.size() - 1) {
+                    nextLevel.get(i).next = null;
+                } else {
+                    nextLevel.get(i).next = nextLevel.get(i + 1);
+                }
+            }
+
+            currentLevel = nextLevel;
+        }
+        return root;
+
+    }
+
+    public int[] mergeArrays(int[] arr1, int[] arr2) {
+        int[] newArray = new int[arr1.length + arr2.length];
+        int arrIndex1 = 0;
+        int arrIndex2 = 0;
+        int newArrayIndex = 0;
+        while (newArrayIndex < newArray.length) {
+
+            if(arrIndex1 == arr1.length) {
+                newArray[newArrayIndex++] = arr2[arrIndex2++];
+                continue;
+            }
+            if(arrIndex2 == arr2.length) {
+                newArray[newArrayIndex++] = arr1[arrIndex1++];
+                continue;
+            }
+
+            if((arr1[arrIndex1] < arr2[arrIndex2])) {
+                newArray[newArrayIndex++] = arr1[arrIndex1];
+                arrIndex1++;
+            } else {
+                newArray[newArrayIndex++] = arr2[arrIndex2];
+                arrIndex2++;
+            }
+        }
+
+        return newArray;
+    }
+
+    public static int findFirstUnique(int[] arr)
+    {
+        int result = -1;
+        Map<Integer, Integer> numberMap = new HashMap<>();
+
+        for (int num : arr) {
+            if (numberMap.containsKey(num)) {
+                int temp = numberMap.get(num);
+                temp++;
+                numberMap.put(num, temp);
+            } else {
+                numberMap.put(num, 1);
+            }
+        }
+
+        for (int num : arr) {
+            if (numberMap.get(num) == Integer.MAX_VALUE) {
+                result = num;
+                break;
+            }
+        }
+
+
+        // write your code here
+        return result;
+    }
+
+
 }
